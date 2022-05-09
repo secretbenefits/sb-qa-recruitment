@@ -1,0 +1,32 @@
+<div>
+  <h1 class="font-bold text-4xl text-blue-500">Signup - Step 1</h1>
+  <p>Choose your gender</p>
+</div>
+<%= form_with(model: @user, url: signup_step_2_path) do |form| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="flex justify-center">
+
+    <% GenderOption.all.each do |gender_option| %>
+      <div class="form-check form-check-inline">
+        <%= form.label :gender, class: "text-3xl form-check-label inline-block text-gray-800 p-3", value: gender_option.name do %>
+          <%= gender_option.name %>
+          <%= form.radio_button :gender, gender_option.name, class: "form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-3 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" %>
+        <% end %>
+      </div>
+
+    <% end %>
+  </div>
+
+  <%= form.submit "Next", class: "w-full text-center py-3 rounded bg-indigo-600 text-white hover:bg-green-dark focus:outline-none" %>
+<% end %>
